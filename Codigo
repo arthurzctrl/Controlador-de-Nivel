@@ -1,0 +1,59 @@
+import colorama
+from colorama import Fore, Style
+import time
+
+# Inicializa o colorama (necessário principalmente para garantir compatibilidade no Windows)
+colorama.init()
+
+# Lista armazenando as mensagens correspondentes a cada nível de água
+# O índice 0 corresponde ao Nível 1, o índice 1 ao Nível 2, e assim por diante.
+mensagens_reservatorio = [
+    "Muito baixo (crítico)", # Nível 1
+    "Baixo",                 # Nível 2
+    "Médio",                 # Nível 3
+    "Alto",                  # Nível 4
+    "Muito alto (alerta)"    # Nível 5
+]
+
+def obter_cor(nivel):
+    """
+    Função responsável por retornar a cor correspondente baseada no nível da água.
+    """
+    if nivel == 1:
+        return Fore.RED
+    elif nivel == 2:
+        return Fore.YELLOW
+    elif nivel == 3:
+        return Fore.GREEN
+    elif nivel == 4:
+        return Fore.CYAN
+    elif nivel == 5:
+        return Fore.BLUE
+    else:
+        return Fore.WHITE # Cor padrão para níveis não mapeados
+
+def simular_monitoramento():
+    """
+    Função para rodar a simulação do monitoramento exibindo os alertas no terminal.
+    """
+    print("Iniciando sistema de monitoramento do reservatório...\n")
+    
+    # Simulando a leitura dos níveis de 1 a 5
+    for nivel in range(1, 6):
+        # Acessa a mensagem correta na lista (subtraindo 1 pois listas começam no índice 0)
+        mensagem_situacao = mensagens_reservatorio[nivel - 1]
+        
+        # Chama a função para pegar a cor baseada no nível atual
+        cor_alerta = obter_cor(nivel)
+        
+        # Exibe a mensagem colorida e utiliza Style.RESET_ALL para restaurar a cor padrão do terminal
+        print(f"{cor_alerta}ALERTA [Nível {nivel}]: {mensagem_situacao}{Style.RESET_ALL}")
+        
+        # Uma pequena pausa para dar efeito de simulação em tempo real
+        time.sleep(1)
+        
+    print("\nSimulação de monitoramento concluída.")
+
+# Execução do programa
+if __name__ == "__main__":
+    simular_monitoramento()
